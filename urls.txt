@@ -1,0 +1,14 @@
+Micro Maestro drivers, code:
+wget http://www.pololu.com/file/download/pololu-usb-sdk-120712.zip?file_id=0J568
+wget http://www.pololu.com/file/download/maestro-linux-100507.tar.gz?file_id=0J315
+svn co http://polstro.googlecode.com/svn/trunk/ .
+https://code.google.com/p/polstro
+
+Instructions
+Pi GPIO, etc.:
+wiringpi.com
+git clone git://git.drogon.net/wiringPi
+www.airspayce.com/mikem/bcm2835/
+http://groups.google.com/group/bcm2835
+wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.35.tar.gz
+https://sites.google.com/site/semilleroadt/raspberry-pi-tutorials/gpio
