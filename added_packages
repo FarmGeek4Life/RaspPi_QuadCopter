@@ -1,0 +1,21 @@
+# Configuration: 'raspi-config'
+
+vim
+emacs
+firmware-linux-free
+linux-image-3.10-3-rpi
+linux-base
+network-manager
+tightvncserver
+eclipse
+git-extras
+gitk
+git-svn
+libusb++-0.1-4c2
+subversion
+
+
+# For micro maestro tools:
+mono-runtime
+libmono-winforms2.0-cil
+libusb-1.0-0-dev
