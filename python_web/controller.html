@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.552, user-scalable=no"/>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas {
+        border: 1px solid #9C9898;
+      }
+    </style>
+    <script src="http://192.168.10.1/kineticJS.js"></script>
+    <script>
+
+      ws = new WebSocket("ws://192.168.10.1:8888/ws");
+
+      ws.onmessage = function (message) {
+        var messages = document.getElementById('messages');
+        messages.innerHTML += "<br>[in] " + message.data;
+      };
+        
+      sendmsg = function(chan, msg) {
+        var message = chan + msg;
+        ws.send(message);
+      };
+
+      function writeMessage(messageLayer, message) {
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText(message, 10, 650);
+      }
+
+      window.onload = function() {
+        var stage = new Kinetic.Stage({
+          container: "container",
+          width: 800,
+          height: 700
+        });
+
+        var shapesLayer  = new Kinetic.Layer();
+        var textLayer    = new Kinetic.Layer();
+        var messageLayer = new Kinetic.Layer();
+
+        /////////////////////////////////////////// Channel 0
+        var text0 = new Kinetic.Text(
+          {
+            x: 2,
+            y: 50,
+            text: '0: Throttle',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            textFill: 'black'
+          }
+        );
+
+        var rect0 = new Kinetic.Rect(
+          {
+            x: 50,
+            y: 10,
+            width: 540,
+            height: 100,
+            cornerRadius: 4,
+            fill: 'blue',
+            stroke: 'black',
+            strokeWidth: 4
+          }
+       );
+
+        rect0.on("touchmove", function() {
+          var touchPos = stage.getPointerPosition();
+          var x = touchPos.x - rect0.x();
+          var y = touchPos.y - rect0.y();
+          x = Math.round(x / ((rect0.width()  - rect0.x()) / 180));
+          y = Math.round(y / ((rect0.height() - rect0.y()) / 180));
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+          sendmsg("2",x)
+        }); 
+
+        shapesLayer.add(rect0);
+        textLayer.add(text0);
+
+        /////////////////////////////////////////// Channel 1
+        var text1 = new Kinetic.Text(
+          {
+            x: 2,
+            y: 150,
+            text: '1: Rudder (Turn)',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            textFill: 'black'
+          }
+        );
+
+        var rect1 = new Kinetic.Rect(
+          {
+            x: 50,
+            y: 110,
+            width: 540,
+            height: 100,
+            cornerRadius: 4,
+            fill: 'green',
+            stroke: 'black',
+            strokeWidth: 4
+          }
+       );
+
+        rect1.on("touchmove", function() {
+          var touchPos = stage.getPointerPosition();
+          var x = touchPos.x - rect1.x();
+          var y = touchPos.y - rect1.y();
+          x = Math.round(x / ((rect1.width()  - rect1.x()) / 180));
+          y = Math.round(y / ((rect1.height() - rect1.y()) / 180));
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+          sendmsg("0",x)
+        });
+        
+        rect1.on("touchend", function() {
+          writeMessage(messageLayer, "Rudder reset");
+          sendmsg("0",-1)
+        });
+
+        textLayer.add(text1);
+        shapesLayer.add(rect1);
+
+        /////////////////////////////////////////// Channel 2
+        var text2 = new Kinetic.Text(
+          {
+            x: 2,
+            y: 250,
+            text: '2: Elevator (F/R)',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            textFill: 'black'
+          }
+        );
+
+        var rect2 = new Kinetic.Rect(
+          {
+            x: 50,
+            y: 210,
+            width: 540,
+            height: 100,
+            cornerRadius: 4,
+            fill: 'brown',
+            stroke: 'black',
+            strokeWidth: 4
+          }
+       );
+
+        rect2.on("touchmove", function() {
+          var touchPos = stage.getPointerPosition();
+          var x = touchPos.x - rect2.x();
+          var y = touchPos.y - rect2.y();
+          x = Math.round(x / ((rect2.width()  - rect2.x()) / 180));
+          y = Math.round(y / ((rect2.height() - rect2.y()) / 180));
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+          sendmsg("1",x)
+        });
+        
+        rect2.on("touchend", function() {
+          writeMessage(messageLayer, "Elevator reset");
+          sendmsg("1",-1)
+        });
+
+        textLayer.add(text2);
+        shapesLayer.add(rect2);
+
+        /////////////////////////////////////////// Channel 3
+        var text3 = new Kinetic.Text(
+          {
+            x: 2,
+            y: 350,
+            text: '3: Aileron (L/R)',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            textFill: 'black'
+          }
+        );
+
+        var rect3 = new Kinetic.Rect(
+          {
+            x: 50,
+            y: 300,
+            width: 540,
+            height: 100,
+            cornerRadius: 4,
+            fill: 'yellow',
+            stroke: 'black',
+            strokeWidth: 4
+          }
+       );
+
+        rect3.on("touchmove", function() {
+          var touchPos = stage.getPointerPosition();
+          var x = touchPos.x - rect3.x();
+          var y = touchPos.y - rect3.y();
+          x = Math.round(x / ((rect3.width()  - rect3.x()) / 180));
+          y = Math.round(y / ((rect3.height() - rect3.y()) / 180));
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+          sendmsg("3",x)
+        });
+        
+        rect3.on("touchend", function() {
+          writeMessage(messageLayer, "Aileron reset");
+          sendmsg("3",-1)
+        });
+
+        textLayer.add(text3);
+        shapesLayer.add(rect3);
+
+
+        /////////////////////////////////////////// Channel 4
+        var text4 = new Kinetic.Text(
+          {
+            x: 2,
+            y: 450,
+            text: '4: AUX',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            textFill: 'black'
+          }
+        );
+
+        var rect4 = new Kinetic.Rect(
+          {
+            x: 50,
+            y: 400,
+            width: 540,
+            height: 100,
+            cornerRadius: 4,
+            fill: 'purple',
+            stroke: 'black',
+            strokeWidth: 4
+          }
+       );
+
+        rect4.on("touchmove", function() {
+          var touchPos = stage.getPointerPosition();
+          var x = touchPos.x - rect4.x();
+          var y = touchPos.y - rect4.y();
+          x = Math.round(x / ((rect4.width()  - rect4.x()) / 180));
+          y = Math.round(y / ((rect4.height() - rect4.y()) / 180));
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+          sendmsg("4",x)
+        });
+
+        textLayer.add(text4);
+        shapesLayer.add(rect4);
+
+        
+        /////////////////////////////////////////// Channel 5
+        var text5 = new Kinetic.Text(
+          {
+            x: 2,
+            y: 550,
+            text: '5: ARM',
+            fontSize: 20,
+            fontFamily: 'Calibri',
+            textFill: 'black'
+          }
+        );
+
+        var rect5 = new Kinetic.Rect(
+          {
+            x: 50,
+            y: 500,
+            width: 540,
+            height: 100,
+            cornerRadius: 4,
+            fill: 'orange',
+            stroke: 'black',
+            strokeWidth: 4
+          }
+       );
+
+        rect5.on("touchmove", function() {
+          var touchPos = stage.getPointerPosition();
+          var x = touchPos.x - rect5.x();
+          var y = touchPos.y - rect5.y();
+          x = Math.round(x / ((rect5.width()  - rect5.x()) / 180));
+          y = Math.round(y / ((rect5.height() - rect5.y()) / 180));
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+          sendmsg("5",x)
+        });
+
+        textLayer.add(text5);
+        shapesLayer.add(rect5);
+        ///////////////////////////////////////// Circle Button
+
+        var circle = new Kinetic.Circle({
+          x: 563,
+          y: 650,
+          radius: 40,
+          fill: "red",
+          stroke: "black",
+          strokeWidth: 4
+        });
+
+        circle.on("touchstart", function() {
+          writeMessage(messageLayer, "Start Servo Sequence 0");
+          sendmsg(9,"S")
+        });
+
+        //circle.on("touchend", function() {
+        //  writeMessage(messageLayer, "");
+        //  sendmsg(9,"E")
+        //});
+
+        shapesLayer.add(circle);
+
+        stage.add(shapesLayer);
+        stage.add(textLayer);
+        stage.add(messageLayer);
+      };
+
+    </script>
+  </head>
+  <body onmousedown="return false;">
+    <div id="container"></div>
+  </body>
+</html>
