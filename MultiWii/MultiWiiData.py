@@ -901,13 +901,13 @@ while True:
             print (MultiWii.inBuf[0:MultiWii.dataSize]).decode
          MultiWii.c_state = MultiWii.IDLE
 
-   print "Heading:",MultiWii.head, "x-angle:", MultiWii.angx, "y-angle:", MultiWii.angy
+   #print "Heading:",MultiWii.head, "x-angle:", MultiWii.angx, "y-angle:", MultiWii.angy
    #print "Acc: x:",MultiWii.ax, "y:",MultiWii.ay,"z:",MultiWii.az
    #print "Gyro: x:",MultiWii.gx, "y:",MultiWii.gy,"z:",MultiWii.gz
    #print "Mag: x:",MultiWii.magx, "y:",MultiWii.magy,"z:",MultiWii.magz
    print "RC: Throt:",MultiWii.rcThrottle, "Yaw:",MultiWii.rcYaw, "Pitch:",MultiWii.rcPitch, "Roll:",MultiWii.rcRoll, "AUX1:",MultiWii.rcAUX1, "AUX2:",MultiWii.rcAUX2 #,"AUX3:",MultiWii.rcAUX3,"AUX4:",MultiWii.rcAUX4
    #print "Alt:",MultiWii.alt
-   print "Motors: 1:",  MultiWii.mot[0], "2:",  MultiWii.mot[1], "3:",  MultiWii.mot[2], "4:",  MultiWii.mot[3], "5:",  MultiWii.mot[4], "6:",  MultiWii.mot[5], "7:",  MultiWii.mot[6], "8:",  MultiWii.mot[7]  
+   #print "Motors: 1:",  MultiWii.mot[0], "2:",  MultiWii.mot[1], "3:",  MultiWii.mot[2], "4:",  MultiWii.mot[3], "5:",  MultiWii.mot[4], "6:",  MultiWii.mot[5], "7:",  MultiWii.mot[6], "8:",  MultiWii.mot[7]  
    #print "Servos: 1:",MultiWii.servo[0], "2:",MultiWii.servo[1], "3:",MultiWii.servo[2], "4:",MultiWii.servo[3], "5:",MultiWii.servo[4], "6:",MultiWii.servo[5], "7:",MultiWii.servo[6], "8:",MultiWii.servo[7]
    #MultiWii.read()
    #time.sleep(1)
@@ -942,3 +942,4 @@ del MultiWii
 #
 #time.sleep(2)
 #Maestro.closeServo()
+
