@@ -1,0 +1,5 @@
+deb http://mirrordirector.raspbian.org/raspbian/ wheezy main contrib non-free rpi
+# gstreamer
+deb http://vontaene.de/raspbian-updates/ . main
+# v4l2 video
+deb http://www.linux-projects.org/listing/uv4l_repo/raspbian/ wheezy main
