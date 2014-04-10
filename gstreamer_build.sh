@@ -16,8 +16,9 @@ done
 
 sha256sum -c *.sha256sum
 
-for file in $(ls -1 |grep -E -e "gz$|xz$"); do
-   if [ ! -d $(echo "$file" | grep -E -v -e "tar\.(gz$|xz$)") ]; then
+for file in $(ls -1 | grep -E -e "gz$|xz$"); do
+   #echo "$(echo "$file" | sed 's/\.tar\.[gx]z$//')"
+   if [ ! -d $(echo "$file" | sed 's/\.tar\.[gx]z$//') ]; then
       echo "Extracting $file"
       tar xf $file
    fi
