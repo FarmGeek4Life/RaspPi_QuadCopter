@@ -1,0 +1,7 @@
+#http://www.debianhelp.co.uk/udev.htm
+#in /etc/udev/rules.d/
+
+# Netgear Wifi, Used for AP
+KERNEL="wlan*", SYSFS{address}=="MAC Address", NAME="wlan0"
+# Edimax Wifi, Used for client
+KERNEL="wlan*", SYSFS{address}=="MAC Address", NAME="wlan1"

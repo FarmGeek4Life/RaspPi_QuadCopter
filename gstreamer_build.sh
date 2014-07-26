@@ -10,15 +10,16 @@ if [ ! -f dependency_install ]; then
 fi
 
 source ./set_env.sh
-FILES=( http://gstreamer.freedesktop.org/src/orc/orc-0.4.18.tar.gz \
-        http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.2.3.tar.xz \
-        http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.2.3.tar.xz \
-        http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.2.3.tar.xz \
-        http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.2.3.tar.xz \
-        http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.2.3.tar.xz \
-        http://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.2.3.tar.xz )
+ORC_DOWNLOAD=http://gstreamer.freedesktop.org/src/orc/orc-0.4.21.tar.xz
+FILES=( http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.4.0.tar.xz \
+        http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.4.0.tar.xz \
+        http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.4.0.tar.xz \
+        http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.4.0.tar.xz \
+        http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.4.0.tar.xz \
+        http://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.4.0.tar.xz )
 
 if [ ! -f downloaded ]; then
+   [ $NO_ERROR -eq 0 ] && wget -c $ORC_DOWNLOAD || NO_ERROR=1
    for file in ${FILES[@]}; do
       [ $NO_ERROR -eq 0 ] && wget -c $file || NO_ERROR=1
       [ $NO_ERROR -eq 0 ] && wget -c $file.sha256sum || NO_ERROR=1
@@ -38,7 +39,7 @@ done
 PREFIX="--prefix=/home/pi/gst/runtime"
 ORC="--enable-orc"
 
-pushd $BASE_PATH/orc*
+pushd $BASE_PATH/orc-*
    CURRENT=$BASE_PATH/orc_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $PREFIX || NO_ERROR=1
@@ -54,7 +55,7 @@ pushd $BASE_PATH/orc*
    fi
 popd
 
-pushd $BASE_PATH/gstreamer*
+pushd $BASE_PATH/gstreamer-*
    CURRENT=$BASE_PATH/gstreamer_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $ORC $PREFIX || NO_ERROR=1
@@ -70,7 +71,7 @@ pushd $BASE_PATH/gstreamer*
    fi
 popd
 
-pushd $BASE_PATH/gst-plugins-base*
+pushd $BASE_PATH/gst-plugins-base-*
    CURRENT=$BASE_PATH/gst-plugins-base_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $ORC $PREFIX || NO_ERROR=1
@@ -86,7 +87,7 @@ pushd $BASE_PATH/gst-plugins-base*
    fi
 popd
 
-pushd $BASE_PATH/gst-plugins-good*
+pushd $BASE_PATH/gst-plugins-good-*
    CURRENT=$BASE_PATH/gst-plugins-good_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $ORC $PREFIX || NO_ERROR=1
@@ -102,7 +103,7 @@ pushd $BASE_PATH/gst-plugins-good*
    fi
 popd
 
-pushd $BASE_PATH/gst-plugins-bad*
+pushd $BASE_PATH/gst-plugins-bad-*
    CURRENT=$BASE_PATH/gst-plugins-bad_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $ORC $PREFIX || NO_ERROR=1
@@ -118,7 +119,7 @@ pushd $BASE_PATH/gst-plugins-bad*
    fi
 popd
 
-pushd $BASE_PATH/gst-plugins-ugly*
+pushd $BASE_PATH/gst-plugins-ugly-*
    CURRENT=$BASE_PATH/gst-plugins-ugly_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $ORC $PREFIX || NO_ERROR=1
@@ -134,7 +135,7 @@ pushd $BASE_PATH/gst-plugins-ugly*
    fi
 popd
 
-pushd $BASE_PATH/gst-libav*
+pushd $BASE_PATH/gst-libav-*
    CURRENT=$BASE_PATH/gst-libav_status
    if [ ! -f $CURRENT ] || [ $(cat $CURRENT | grep -c "configured") -eq 0 ]; then
       [ $NO_ERROR -eq 0 ] && ./configure $ORC $PREFIX || NO_ERROR=1
